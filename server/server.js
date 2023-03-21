@@ -11,10 +11,10 @@ server.use(cors());
 server.use(express.json());
 dotenv.config();
 
-const PORT = process.env.PORT || 9000;
+const PORT = process.env.PORT || 7000;
 //init the server:
 server.listen(PORT, ()=> console.info(`=> Server is live in: http://localhost:${PORT}`));
 // MONGODB CONNECTION SETUP
-mongoConnect(process.env.MONGODB_URL, "TEST")
+mongoConnect(process.env.MONGODB_URL, "leorodney");
 
 //Routes handellers:
