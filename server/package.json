@@ -1,13 +1,15 @@
 {
-  "name": "server",
+  "name": "leorodney-server",
   "version": "1.0.0",
   "description": "ai image generator server side",
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
+    "test": "mocha server.js --exit",
     "start": "node server.js"
   },
   "keywords": [
+    "leorodney",
     "ai image generator",
     "ai",
     "openai",
@@ -17,12 +19,15 @@
   "author": "whybe7",
   "license": "ISC",
   "dependencies": {
+    "cloudinary": "^1.35.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "mongoose": "^7.0.2"
+    "mongoose": "^7.0.2",
+    "openai": "^3.2.1"
   },
   "devDependencies": {
+    "mocha": "^10.2.0",
     "nodemon": "^2.0.21"
   }
 }
