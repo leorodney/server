@@ -5,7 +5,10 @@ const Prompt = new mongoose.Schema({
     value: { type: String, required: true },
     img: { type: String, required: true },
     likes: { type: Number, default: 0 },
+    downloads: { type: Number, default: 0 },
     timeStamp: { type: Date, default: Date.now },
-}, { timestamps: true });
+},
+//  { timestamps: true }
+);
 
-module.exports = mongoose.model("User", User);
+module.exports = mongoose.model("Prompt", Prompt);
