@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const Prompt = new mongoose.Schema({
     author: { type: String, required: true },
@@ -7,6 +7,8 @@ const Prompt = new mongoose.Schema({
     likes: { type: Number, default: 0 },
     downloads: { type: Number, default: 0 },
     timeStamp: { type: Date, default: Date.now },
-}, { timestamps: true });
+},
+//  { timestamps: true }
+);
 
-module.exports = mongoose.model("Prompt", Prompt);
+export default mongoose.model("Prompt", Prompt);
