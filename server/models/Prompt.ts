@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const Prompt = new mongoose.Schema({
     author: { type: String, required: true },
@@ -11,4 +11,4 @@ const Prompt = new mongoose.Schema({
 //  { timestamps: true }
 );
 
-module.exports = mongoose.model("Prompt", Prompt);
+export default mongoose.model("Prompt", Prompt);
