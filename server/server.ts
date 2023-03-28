@@ -3,6 +3,10 @@ import dotenv from "dotenv";
 import cors from "cors";
 // Mongodb connection
 import { mongoConnect } from "./database/connect";
+// Routes
+import { communityRoute } from "./routes/community";
+import { productionRoute } from "./routes/production";
+import { promptRoute } from "./routes/prompt";
 
 
 //routes
@@ -20,3 +24,6 @@ server.listen(PORT, ()=> console.info(`=> Server is live in: http://localhost:${
 mongoConnect(process.env.MONGODB_URL as string, "leorodney"); 
 
 //Routes handellers:
+server.get("/showcases", communityRoute);
+server.post("/production", productionRoute);
+server.post("/prompt", promptRoute);
