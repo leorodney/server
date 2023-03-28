@@ -10,7 +10,7 @@ import { mongoConnect } from "./database/connect";
 const server = express();
 //Middelwares:
 server.use(cors());
-server.use(express.json());
+server.use(express.json({limit: '50mb'}));
 dotenv.config();
 
 const PORT = process.env.PORT || 7000;
@@ -18,6 +18,5 @@ const PORT = process.env.PORT || 7000;
 server.listen(PORT, ()=> console.info(`=> Server is live in: http://localhost:${PORT}`));
 // MONGODB CONNECTION SETUP
 mongoConnect(process.env.MONGODB_URL as string, "leorodney"); 
-
 
 //Routes handellers:
