@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 export const loginRoute = async (req: Request, res: Response)=>{
     const {usernameOrEmail, password} = req.body;
     try{
-        const user = await User.findOne({$or: [{username: usernameOrEmail }, {email: usernameOrEmail }]}).setOptions({sanitizeFilter: true});        
+        const user = await User.findOne({$or: [{username: { $eq: usernameOrEmail } }, {email: { $eq: usernameOrEmail } }]});        
         if(!user){ 
             return res.status(404).json({message: 'User not found'}); 
         }
