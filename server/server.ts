@@ -8,6 +8,8 @@ import { mongoConnect } from "./database/connect";
 import { communityRoute } from "./routes/community";
 import { productionRoute } from "./routes/production";
 import { promptRoute } from "./routes/prompt";
+import { loginRoute } from "./routes/login";
+import { registerRoute } from "./routes/register";
 
 // init the server:
 const server = express();
@@ -17,9 +19,9 @@ const limiter = rateLimit({
     windowMs: 1 * 60 * 1000, // 1 minutes
     max: 10 // limit each IP to 10 requests per 1 minutes
 });
+
 //Middelwares:
 server.use(cors());
-//  apply to all requests
 server.use(limiter);
 server.use(express.json({limit: '50mb'}));
 dotenv.config();
@@ -31,6 +33,8 @@ server.listen(PORT, ()=> console.info(`=> Server is live in: http://localhost:${
 mongoConnect(process.env.MONGODB_URL as string, "leorodney"); 
 
 //Routes handellers:
+server.post(["/signin", "/login"], loginRoute);
+server.post(["/signup", "/register"], registerRoute);
 server.get("/showcases", communityRoute);
 server.post("/production", productionRoute);
 server.post("/prompt", promptRoute);
