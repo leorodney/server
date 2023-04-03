@@ -5,6 +5,7 @@ import cors from "cors";
 import session from "express-session";
 // Mongodb connection
 import { mongoConnect } from "./database/connect";
+import MongoStore from "connect-mongo";
 // Routes
 import { communityRoute } from "./routes/community";
 import { productionRoute } from "./routes/production";
