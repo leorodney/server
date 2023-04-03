@@ -7,7 +7,11 @@ export const loginRoute = async (req: Request, res: Response)=>{
     const authenticated = req.session.user?.authenticated;
     console.log(req.session.user);
     try{
-        const user = await User.findOne({$or: [{username: { $eq: usernameOrEmail } }, {email: { $eq: usernameOrEmail } }]});        
+        if(authenticated){
+            return res.status(200).json({message: 'You are already authenticated', ok: true});
+        }
+
+        const user = await User.findOne({$or: [{username: { $eq: emailorusername } }, {email: { $eq: emailorusername } }]});        
         if(!user){ 
             return res.status(404).json({message: 'User not found'}); 
         }
