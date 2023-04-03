@@ -3,7 +3,9 @@ import User from '../models/User';
 import bcrypt from 'bcrypt';
 
 export const loginRoute = async (req: Request, res: Response)=>{
-    const {usernameOrEmail, password} = req.body;
+    const {emailorusername, password} = req.body;
+    const authenticated = req.session.user?.authenticated;
+    console.log(req.session.user);
     try{
         const user = await User.findOne({$or: [{username: { $eq: usernameOrEmail } }, {email: { $eq: usernameOrEmail } }]});        
         if(!user){ 
