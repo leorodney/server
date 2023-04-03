@@ -16,7 +16,7 @@ export const loginRoute = async (req: Request, res: Response)=>{
             return res.status(404).json({message: 'User not found', ok: false}); 
         }
         if(!await bcrypt.compare(password, user.password)){
-            return res.status(401).json({message: 'Invalid password or Email/Username'});
+            return res.status(401).json({message: 'Invalid password or Email/Username', ok: false});
         }
         res.status(200).json({message: 'Login successful'});
     }
