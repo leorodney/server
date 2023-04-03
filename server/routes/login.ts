@@ -18,7 +18,19 @@ export const loginRoute = async (req: Request, res: Response)=>{
         if(!await bcrypt.compare(password, user.password)){
             return res.status(401).json({message: 'Invalid password or Email/Username', ok: false});
         }
-        res.status(200).json({message: 'Login successful'});
+
+        req.session.user = {
+            authenticated: true,
+            username: user.username,
+            uid: user._id
+        };
+
+        req.session.save((err)=>{
+            if(err){
+                console.error(err);
+            }
+        });
+        res.status(200).json({message: 'Login successful', ok: true});
     }
     catch(error){
         console.log(error);
