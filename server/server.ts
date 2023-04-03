@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import rateLimit from "express-rate-limit";
 import cors from "cors";
+import session from "express-session";
 // Mongodb connection
 import { mongoConnect } from "./database/connect";
 // Routes
