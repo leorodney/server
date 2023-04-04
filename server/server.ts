@@ -29,7 +29,11 @@ const sessionConfig = session({
     name: "Leorodney-SID",
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 }, // 1 day
+    cookie: { 
+        secure: true,
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24 // 1 day
+    },
     store: MongoStore.create({
         mongoUrl: process.env.MONGODB_URL as string,
         dbName: process.env.MONGODB_DB as string,
