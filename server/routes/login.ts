@@ -25,11 +25,12 @@ export const loginRoute = async (req: Request, res: Response)=>{
             uid: user._id
         };
 
-        req.session.save((err)=>{
-            if(err){
-                console.error(err);
-            }
-        });
+        // req.session.save((err)=>{
+        //     if(err){
+        //         console.error(err);
+        //     }
+        // });
+        
         res.status(200).json({message: 'Login successful', ok: true});
     }
     catch(error){
