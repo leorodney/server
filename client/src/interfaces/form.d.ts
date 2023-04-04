@@ -15,3 +15,5 @@ export interface Swap{
     fields: Field[];
     swap?: boolean = false;
 }
+
+export type Submit = (e) => Promise<void> | void;
