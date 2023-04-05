@@ -54,18 +54,6 @@ const sessionConfig = session({
 
 });
 
-type User = {
-    uid: mongoose.Types.ObjectId;
-    username: string;
-    authenticated: boolean;
-}
-
-declare module "express-session" {
-    interface SessionData {
-        user: User;
-    }
-}
-
 //Middelwares:
 server.use(cors());
 server.use(limiter);
