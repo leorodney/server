@@ -17,6 +17,9 @@ import mongoose from "mongoose";
 // init the server:
 const server = express();
 
+// remove the x-powered-by header (fingerprints the server)
+server.disable("x-powered-by");
+
 // setup rate limiter
 const limiter = rateLimit({
     windowMs: 1 * 60 * 1000, // 1 minutes
