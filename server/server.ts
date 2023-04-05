@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import rateLimit from "express-rate-limit";
 import cors from "cors";
+import csrf from "lusca";
 import session from "express-session";
 // Mongodb connection
 import { mongoConnect } from "./database/connect";
@@ -56,6 +57,7 @@ const sessionConfig = session({
 
 //Middelwares:
 server.use(cors());
+server.use(csrf()); // csrf protection (cross site request forgery)
 server.use(limiter);
 server.use(sessionConfig);
 server.use(express.urlencoded({limit: '50mb', extended: true}));
