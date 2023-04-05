@@ -37,7 +37,7 @@ const limiter = rateLimit({
 // setup session
 const sessionConfig = session({
     secret: process.env.SESSION_SECRET as string,
-    name: "Leorodney-SID",
+    name: "leorodney.SID",
     resave: false,
     saveUninitialized: false,
     cookie: { 
