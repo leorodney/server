@@ -4,11 +4,14 @@ import bcrypt from 'bcrypt';
 
 export const loginRoute = async (req: Request, res: Response)=>{
     const {emailorusername, password} = req.body;
-    const authenticated = req.session.user?.authenticated;
-    console.log(req.session.user);
+    
+    console.log(req.session);
+
     try{
-        if(authenticated){
-            return res.status(200).json({message: 'You are already authenticated', ok: true});
+
+        if(req.session.user?.authenticated){
+            console.log({SID: req.sessionID})
+            return res.status(200).json({message: 'Already logged in', ok: true});
         }
 
         const user = await User.findOne({$or: [{username: { $eq: emailorusername } }, {email: { $eq: emailorusername } }]});        
@@ -24,12 +27,6 @@ export const loginRoute = async (req: Request, res: Response)=>{
             username: user.username,
             uid: user._id
         };
-
-        // req.session.save((err)=>{
-        //     if(err){
-        //         console.error(err);
-        //     }
-        // });
         
         res.status(200).json({message: 'Login successful', ok: true});
     }
