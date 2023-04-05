@@ -41,7 +41,7 @@ const sessionConfig = session({
     resave: false,
     saveUninitialized: false,
     cookie: { 
-        secure: true,
+        // secure: true, // only send cookie over https wich is not the case in development
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24 // 1 day
     },
