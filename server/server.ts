@@ -12,7 +12,15 @@ import { productionRoute } from "./routes/production";
 import { promptRoute } from "./routes/prompt";
 import { loginRoute } from "./routes/login";
 import { registerRoute } from "./routes/register";
-import mongoose from "mongoose";
+// Types
+import { SessionUser } from "./src/@types/session-user";
+
+
+declare module "express-session" {
+    interface SessionData {
+        user: SessionUser;
+    }
+}
 
 // init the server:
 const server = express();
