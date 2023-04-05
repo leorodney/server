@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import rateLimit from "express-rate-limit";
 import cors from "cors";
+import csrf from "lusca";
 import session from "express-session";
 // Mongodb connection
 import { mongoConnect } from "./database/connect";
@@ -12,10 +13,21 @@ import { productionRoute } from "./routes/production";
 import { promptRoute } from "./routes/prompt";
 import { loginRoute } from "./routes/login";
 import { registerRoute } from "./routes/register";
-import mongoose from "mongoose";
+// Types
+import { SessionUser } from "./src/@types/session-user";
+
+
+declare module "express-session" {
+    interface SessionData {
+        user: SessionUser;
+    }
+}
 
 // init the server:
 const server = express();
+
+// remove the x-powered-by header (fingerprints the server)
+server.disable("x-powered-by");
 
 // setup rate limiter
 const limiter = rateLimit({
@@ -26,11 +38,11 @@ const limiter = rateLimit({
 // setup session
 const sessionConfig = session({
     secret: process.env.SESSION_SECRET as string,
-    name: "Leorodney-SID",
+    name: "leorodney.SID",
     resave: false,
     saveUninitialized: false,
     cookie: { 
-        secure: true,
+        // secure: true, // only send cookie over https wich is not the case in development
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24 // 1 day
     },
@@ -43,20 +55,9 @@ const sessionConfig = session({
 
 });
 
-type User = {
-    uid: mongoose.Types.ObjectId;
-    username: string;
-    authenticated: boolean;
-}
-
-declare module "express-session" {
-    interface SessionData {
-        user: User;
-    }
-}
-
 //Middelwares:
 server.use(cors());
+server.use(csrf()); // csrf protection (cross site request forgery)
 server.use(limiter);
 server.use(sessionConfig);
 server.use(express.urlencoded({limit: '50mb', extended: true}));
