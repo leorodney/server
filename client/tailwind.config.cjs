@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        "spin-slow": "spin 2s cubic-bezier(0.19, 1, 0.22, 1) infinite",
+        'spin-slow': 'spin 2s cubic-bezier(0.19, 1, 0.22, 1) infinite',
       }
     },
   },
