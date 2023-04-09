@@ -14,9 +14,9 @@ jobs:
 
     runs-on: ubuntu-latest
     
-    defaults:
-       run:
-         working-directory: ./server/
+    # defaults:
+       # run:
+         # working-directory: ./server
 
     strategy:
       matrix:
@@ -24,8 +24,10 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
+    # Server Dependencies Compatibility
+    - working-directory: /server
     - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Node>${{ matrix.node-version }} Server Dependencies Compatibility
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
@@ -34,7 +36,19 @@ jobs:
     - run: npm i
     - run: npm ci
     - run: npm run build --if-present
-    - run: npm test
+    
+    # Client Dependencies Compatibility
+    - working-directory: /client
+    - uses: actions/checkout@v3
+    - name: Node>${{ matrix.node-version }} Client Dependencies Compatibility
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: './client/package-lock.json'
+    - run: npm i
+    - run: npm ci
+    - run: npm run build --if-present
     
     - name: action-git-diff-suggestions
     # You may pin to the exact commit or the version.
