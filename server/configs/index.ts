@@ -14,6 +14,11 @@ export const limiterConfig = rateLimit({
 });
 
 /**
+ * setup helemet middleware configuration to secure the server headers
+ */
+export const helmetConfig = helmet();
+
+/**
  * setup csrf middleware configuration to prevent cross site request forgery
  */
 export const csrfConfig = csrf({
