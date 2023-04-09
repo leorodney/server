@@ -1,11 +1,15 @@
+import React, { FormEventHandler } from "react";
+
 export interface Form {
     title: string;
     fields: Field[];
+    onSubmit: Submit;
+    authData: AuthPatcher;
+    errors: string[];
 };
 
 export interface Field {
     name: string;
-    label: string;
     type: string;
     placeholder: string;
 }
@@ -16,4 +20,23 @@ export interface Swap{
     swap?: boolean = false;
 }
 
-export type Submit = (e) => Promise<void> | void;
+export type Submit = (e) => FormEventHandler<HTMLFormElement> | Promise<void>;
+
+export type AuthData = Login | Register;
+export type AuthPatcher = LoginPatcher | RegisterPatcher;
+
+export type LoginPatcher = [Login, React.Dispatch<React.SetStateAction<Login>>];
+export type RegisterPatcher = [Register, React.Dispatch<React.SetStateAction<Register>>];
+
+export type Login = {
+    emailorusername: string;
+    password: string;
+}
+
+export type Register = {
+    fullname: string;
+    username: string;
+    email: string;
+    password: string;
+    confirmpassword: string;
+}
