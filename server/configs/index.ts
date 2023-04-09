@@ -21,8 +21,8 @@ export const helmetConfig = helmet();
 /**
  * setup csrf middleware configuration to prevent cross site request forgery
  */
-export const csrfConfig = csrf({
-    csrf: true, 
+export const luscaConfig = lusca({
+    csrf: true,
     csp: false, // Content Security Policy
     xframe: "SAMEORIGIN", // SAMEORIGIN, DENY, ALLOW-FROM
     hsts: { 
