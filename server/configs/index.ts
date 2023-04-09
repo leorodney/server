@@ -3,6 +3,7 @@ import MongoStore from "connect-mongo";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
 import session from "express-session";
+import { csrf, csrfOptions } from "lusca";
 
 /** 
  * setup limiter middleware (rate limiter) configuration 
@@ -11,6 +12,21 @@ export const limiterConfig = rateLimit({
     windowMs: 1 * 60 * 1000, // 1 minutes
     max: 10 // limit each IP to 10 requests per windowMs
 });
+
+/**
+ * setup csrf middleware configuration to prevent cross site request forgery
+ */
+export const csrfConfig = csrf({
+    csrf: true, 
+    csp: false, // Content Security Policy
+    xframe: "SAMEORIGIN", // SAMEORIGIN, DENY, ALLOW-FROM
+    hsts: { 
+        maxAge: 31536000, // Must be at least 1 year to be approved
+        includeSubDomains: true, // Must be enabled to be approved
+        preload: true // https://hstspreload.org/
+    },
+    xssProtection: true, // https://www.owasp.org/index.php/List_of_useful_HTTP_headers
+} as csrfOptions );
 
 /** 
  * setup cors middleware configuration to be compatible with the client cookies bag
