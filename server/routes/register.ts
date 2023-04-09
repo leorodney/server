@@ -20,12 +20,9 @@ export const registerRoute = async (req: Request, res: Response)=>{
             username: user.username,
             uid: user._id
         };
-        req.session.save((err)=>{
-            if(err){
-                console.error(err);
-            }
-        });
-        res.status(201).json({message: 'User created successfully'});
+
+        user.save();
+        return res.status(201).json({message: 'User created successfully'});
     }
     catch(error){
         console.log(error);
