@@ -1,6 +1,5 @@
 import express from "express";
 import dotenv from "dotenv";
-import csrf from "lusca";
 // Mongodb connection
 import { mongoConnect } from "./database/connect";
 // Routes
@@ -12,7 +11,7 @@ import { registerRoute } from "./routes/register";
 // Types
 import { SessionUser } from "./src/@types/session-user";
 // Configs
-import { corsConfig, limiterConfig, sessionConfig } from "./configs";
+import { corsConfig, csrfConfig, limiterConfig, sessionConfig } from "./configs";
 // Middlewares
 import { consoleMiddleware } from "./middlewares";
 
@@ -30,7 +29,7 @@ server.disable("x-powered-by");
 
 //setup express server Middelwares:
 server.use(corsConfig); // cors configuration
-server.use(csrf()); // csrf protection (cross site request forgery)
+server.use(csrfConfig); // csrf protection (cross site request forgery)
 server.use(limiterConfig); // rate limiter
 server.use(sessionConfig); // session configuration
 server.use(express.urlencoded({limit: '50mb', extended: false})); // parse application/x-www-form-urlencoded
