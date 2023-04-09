@@ -11,9 +11,10 @@ import { registerRoute } from "./routes/register";
 // Types
 import { SessionUser } from "./src/@types/session-user";
 // Configs
-import { corsConfig, csrfConfig, limiterConfig, sessionConfig } from "./configs";
+import { corsConfig, luscaConfig, limiterConfig, sessionConfig, helmetConfig } from "./configs";
 // Middlewares
 import { consoleMiddleware } from "./middlewares";
+import { csrf } from "lusca";
 
 declare module "express-session" {
     interface SessionData {
@@ -24,12 +25,10 @@ declare module "express-session" {
 // init the server:
 const server = express();
 
-// remove the x-powered-by header (fingerprints the server)
-server.disable("x-powered-by");
-
 //setup express server Middelwares:
+server.use(helmetConfig) // helmet configuration
 server.use(corsConfig); // cors configuration
-server.use(csrfConfig); // csrf protection (cross site request forgery)
+// server.use(luscaConfig); // lusca protection configuration
 server.use(limiterConfig); // rate limiter
 server.use(sessionConfig); // session configuration
 server.use(express.urlencoded({limit: '50mb', extended: false})); // parse application/x-www-form-urlencoded
