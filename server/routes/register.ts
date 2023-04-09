@@ -9,7 +9,7 @@ export const registerRoute = async (req: Request, res: Response)=>{
         if(await User.findOne({email: { $eq: email }})){
             return res.status(409).json({message: `User with email: ${email}, already exists`});
         }
-        if(await User.findOne({username: { $eq: username }}).setOptions({sanitizeFilter: true})){
+        if(await User.findOne({username: { $eq: username }})){
             return res.status(409).json({message: `User with username: ${username}, already exists`});
         }
         const hashedPassword = await bcrypt.hash(password, 10);
