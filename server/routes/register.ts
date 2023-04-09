@@ -14,7 +14,7 @@ export const registerRoute = async (req: Request, res: Response)=>{
         }
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = new User({firstname, lastname, email, username, password: hashedPassword});
-        user.save();
+
         req.session.user = {
             authenticated: true,
             username: user.username,
