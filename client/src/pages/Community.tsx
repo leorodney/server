@@ -1,13 +1,13 @@
-import { useSelector } from "react-redux";
 import Hero from "../components/Hero";
 import ShowCases from "../components/ShowCases";
-import { AuthUser } from "../interfaces/user";
+import { useNavigate } from "react-router-dom";
+import useAuthorization from "../hooks/authorization";
 
 export default function Community() {
-  const user = useSelector((state: AuthUser)=> state);
-
-  console.log(user);
-
+  const authorization = useAuthorization();
+  const navigate = useNavigate();
+  !authorization.isAuthenticated ? navigate("/login") : null;
+  console.log("Community:",authorization);
   return (
     <>
       <Hero/>

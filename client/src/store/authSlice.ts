@@ -4,6 +4,7 @@ import { AuthUser } from "../interfaces/user";
 
 // define the initial state
 const initialState : AuthUser = {
+    isAuthenticated: false,
     username: "",
     uid: "",
 };
@@ -15,11 +16,13 @@ const authReducer = createSlice({
     reducers: {
         // define the reducers
         login: (state, action: PayloadAction<AuthUser>) => {
+            state.isAuthenticated = true;
             state.username = action.payload.username;
             state.uid = action.payload.uid;
         },
 
         logout: (state) => {
+            state.isAuthenticated = false;
             state.username = "";
             state.uid = "";
         }

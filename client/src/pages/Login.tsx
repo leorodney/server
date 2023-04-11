@@ -5,22 +5,27 @@ import SidebySide from "../components/SidebySide";
 import { loginFields } from "../utils/form";
 import { Login } from "../interfaces/form";
 import { login } from "../store/authSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { AuthUser } from "../interfaces/user";
+import { useDispatch } from "react-redux";
+import useAuthorization from "../hooks/authorization";
 
 export default function Login() {
+  // check if user is authenticated and redirect to home if true
+  const authorization = useAuthorization();
+  const navigate = useNavigate();
+  authorization.isAuthenticated ? navigate("/") : null;
+  console.log("Login:",authorization);
+  
   const [loginData, setLoginData] = useState({emailorusername: "", password: ""} as Login);
   const [errors, setErrors] = useState([] as string[]);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   // set time to empty errors using setTimeout to avoid memory leaks and UseEffect
   useEffect(() => {
     if(errors.length == 0) return;
-    const errorsWipeCrono =() => {
+    const errorsWipeChrono =() => {
       setErrors([] as string[]);
     };
-    setTimeout(errorsWipeCrono, 5000);
+    setTimeout(errorsWipeChrono, 5000);
     return () => {
       clearTimeout(5000);
     }
@@ -41,7 +46,7 @@ export default function Login() {
       }
 
     } catch (error : any) {
-      setErrors([...errors, error.response.data.error]);
+      error.response?.status == 500 ? setErrors([...errors, "Somethings went wrong please try again soon."]) : setErrors([...errors, error.response.data.error]);
     }
   }
 
