@@ -6,7 +6,7 @@ import { mongoConnect } from "./database/connect";
 import { communityRoute } from "./routes/community";
 import { productionRoute } from "./routes/production";
 import { promptRoute } from "./routes/prompt";
-import { authRoute } from "./routes/auth";
+import { authorizationRoute } from "./routes/auth";
 import { loginRoute } from "./routes/login";
 import { registerRoute } from "./routes/register";
 // Types
@@ -46,7 +46,7 @@ mongoConnect(process.env.MONGODB_URL as string, "leorodney");
 //Routes handellers:
 server.post(["/signin", "/login"], loginRoute);
 server.post(["/signup", "/register"], registerRoute);
-server.get("/auth", authRoute);
+server.get("/auth", authorizationRoute);
 server.get("/showcases", communityRoute);
 server.post("/production", productionRoute);
 server.post("/prompt", promptRoute);
