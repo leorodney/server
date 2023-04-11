@@ -4,8 +4,14 @@ import Anvil from '../components/Anvil';
 import Header from '../components/Header';
 import Projection from '../components/Projection';
 import { Prompt }  from "../interfaces/prompt";
+import useAuthorization from '../hooks/authorization';
+import { useNavigate } from 'react-router-dom';
 
 export default function Production() {
+  const authorization = useAuthorization();
+  const navigate = useNavigate();
+  !authorization.isAuthenticated ? navigate("/login") : null;
+
   const PromptInterface : Prompt = { img: "", author: "", value: "" };
   const [prompt, setPrompt] = useState(PromptInterface);  
   const [status, setStatus] = useState({generating: false, publishing: false});
@@ -14,7 +20,7 @@ export default function Production() {
     <main className="h-screen w-screen flex items-center justify-center flex-col bg-center bg-cover bg-no-repeat" style={{backgroundImage: `url(${productionBG})`}}>
       {/* <Header/> */}
       <section className='h-[540px] w-[75%] px-6 py-8 flex items-center gap-4 bg-gray-200 rounded-lg'>
-        <Projection img={prompt.img} {...status}/>
+        <Projection img={prompt.img} generating={status.generating}/>
         <Anvil prompt={prompt} setPrompt={setPrompt} setStatus={setStatus}/>
       </section>
     </main>
