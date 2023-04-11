@@ -4,19 +4,29 @@ import SidebySide from "../components/SidebySide";
 import { registerFields } from "../utils/form";
 import FormValidator from "../utils/FormValidator";
 import { Register } from "../interfaces/form";
+import useAuthorization from "../hooks/authorization";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../store/authSlice";
 
 
 export default function Register() {
+  // check if user is authenticated and redirect to home if true
+  const authorization = useAuthorization();
+  const navigate = useNavigate();
+  authorization.isAuthenticated ? navigate("/") : null;
+  
   const [registerData, setRegisterData] = useState({fullname: "", email: "", username: "", password: "", confirmpassword: ""} as Register);
   const [errors, setErrors] = useState([] as string[]);
+  const dispatch = useDispatch();
 
   // set time to empty errors using setTimeout to avoid memory leaks and UseEffect
   useEffect(() => {
     if(errors.length == 0) return;
-    const errorsWipeCrono =() => {
+    const errorsWipeChrono =() => {
       setErrors([] as string[]);
     };
-    setTimeout(errorsWipeCrono, 5000);
+    setTimeout(errorsWipeChrono, 5000);
     return () => {
       clearTimeout(5000);
     }
@@ -36,8 +46,13 @@ export default function Register() {
     const lastname = registerData.fullname.split(" ")[1].charAt(0).toUpperCase() + registerData.fullname.split(" ")[1].slice(1);
     try{
       const authResponse =  await axios.post(`${import.meta.env.VITE_LOCAL_SERVER}:${import.meta.env.VITE_LOCAL_PORT}/register`, { firstname, lastname, email, username, password }, {withCredentials: true});
+      if(authResponse.data.ok){
+        // dispatch auth action to the store:
+        dispatch(login(authResponse.data.user));
+        return navigate("/");
+      }
     }catch(error : any){
-      setErrors([...errors, error.response.data.error]);
+      error.response?.status == 500 ? setErrors([...errors, "Somethings went wrong please try again soon."]) : setErrors([...errors, error.response.data.error]);
     }
   }
 
