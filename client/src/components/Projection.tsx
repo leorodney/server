@@ -1,13 +1,8 @@
-import { Prompt } from "../interfaces/prompt";
 import leorodney from '../assets/leorodney-b.png';
 import Loader from "./Loader";
+import { Projection } from "../interfaces/projection";
 
-interface Status{
-  generating?: boolean;
-  publishing?: boolean;
-}
-
-export default function Projection({img}: Prompt, {generating}: Status ) {
+export default function Projection({img, generating}: Projection) {
   console.log({generating});
   return (
     <section className='h-full w-1/2 flex items-center gap-4 justify-center flex-col'>
@@ -24,7 +19,7 @@ export default function Projection({img}: Prompt, {generating}: Status ) {
           <img src={leorodney} className="h-24 w-24 object-cover bg-center bg-no-repeat opacity-40" alt="Leorodney Logo" />
         }
           </div>
-        <a download={"leorodney - Art Prompt"} href={img} className="px-4 py-2 w-full text-center text-white transition-all hover:scale-[1.02] active:scale-95 rounded-lg bg-[var(--clr-p)]">Download</a>
+        <a download={"leorodney-Art-Prompt"} href={img} className="px-4 py-2 w-full text-center text-white transition-all hover:scale-[1.02] active:scale-95 rounded-lg bg-[var(--clr-p)]">Download</a>
     </section>
   )
 }
