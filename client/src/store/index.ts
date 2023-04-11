@@ -8,7 +8,7 @@ import { StoreReducers } from "../interfaces/store";
 const rootReducer = combineReducers({
     user: authReducer,
     prompts: promptsReducer,
-} as StoreReducers );
+} satisfies StoreReducers );
 
 const store = configureStore({
     reducer: rootReducer,
