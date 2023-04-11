@@ -7,10 +7,10 @@ export const registerRoute = async (req: Request, res: Response)=>{
 
     try{
         if(await User.findOne({email: { $eq: email }})){
-            return res.status(409).json({message: `User with email: ${email}, already exists`});
+            return res.status(409).json({error: `User with email: ${email}, already exists`, ok: false});
         }
         if(await User.findOne({username: { $eq: username }})){
-            return res.status(409).json({message: `User with username: ${username}, already exists`});
+            return res.status(409).json({error: `User with username: ${username}, already exists`, ok: false});
         }
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = new User({firstname, lastname, email, username, password: hashedPassword});
@@ -22,7 +22,7 @@ export const registerRoute = async (req: Request, res: Response)=>{
         };
 
         user.save();
-        return res.status(201).json({message: 'User created successfully'});
+        return res.status(201).json({user: { uid: user._id, username: user.username }, message: 'User created successfully', ok: true});
     }
     catch(error){
         console.log(error);
