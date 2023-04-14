@@ -15,11 +15,11 @@ const promptsReducer = createSlice({
     reducers: {
         // define the reducers
         addPrompt: (state, action: PayloadAction<Prompt>) => {
-            state.push(action.payload);
+            state.prompts.push(action.payload);
         },
 
         setPrompts: (state, action: PayloadAction<Prompt[]>) => {
-            state = action.payload;
+            state.prompts = action.payload;
         },
 
         // get random prompt
@@ -41,5 +41,5 @@ const promptsReducer = createSlice({
 });
 
 // export the actions and reducer
-export const { addPrompt, setPrompts, searchPrompt } = promptsReducer.actions;
+export const { addPrompt, setPrompts, getRandomPrompt, setSearchQuery, searchPrompt } = promptsReducer.actions;
 export default promptsReducer.reducer;
