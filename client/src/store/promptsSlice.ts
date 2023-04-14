@@ -20,13 +20,18 @@ const promptsReducer = createSlice({
         },
 
         // get random prompt
-        // getRandomPrompt: (state: Prompt[]) => {
-        //     return state[Math.floor(Math.random() * state.length)];
-        // },
+        getRandomPrompt: (state: Prompt[]) => {
+            return state[Math.floor(Math.random() * state.length)];
+        },
+
+        // set search query
+        setSearchQuery: (state, action: PayloadAction<string>) => {
+            state.search = action.payload;
+        },
 
         // search for prompt by author or value
-        searchPrompt: (state, action: PayloadAction<string>) => {
-            return state.filter(prompt => prompt.author.toLowerCase().includes(action.payload) || prompt.value.toLowerCase().includes(action.payload));
+        searchPrompt: (state) => {
+            return state.prompts.filter(prompt => prompt.author.toLowerCase().includes(state.search) || prompt.value.toLowerCase().includes(state.search));
         }
 
     }
