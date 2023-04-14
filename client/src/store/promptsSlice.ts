@@ -3,7 +3,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Prompt, PromptState } from "../interfaces/prompt";
 
 // define the initial state
-const initialState : Prompt[] = [];
+const initialState : PromptState = {
+    prompts: [],
+    search: ""
+};
 
 // create the slice
 const promptsReducer = createSlice({
