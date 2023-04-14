@@ -1,7 +1,9 @@
 import axios from "axios";
 import React from "react";
 import { Submit } from "../interfaces/form";
-import { Prompt } from "../interfaces/prompt";
+import { useDispatch, useSelector } from "react-redux";
+import { StoreState } from "../interfaces/store";
+import { setPrompt, setStatus } from "../store/productionSlice";
 
 interface Props{
   prompt: Prompt;
