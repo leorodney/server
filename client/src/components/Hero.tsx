@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom';
 import HeroBG from '../assets/HeroBG.png';
 import Header from './Header';
+import { useDispatch } from 'react-redux';
+import { KeyboardEvent, useState } from 'react';
+import { setSearchQuery as setSearchQueryAction } from '../store/promptsSlice';
 
 export default function Hero() {
   return (
