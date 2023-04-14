@@ -1,6 +1,6 @@
 // setup the prompts slice of the store
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Prompt } from "../interfaces/prompt";
+import { Prompt, PromptState } from "../interfaces/prompt";
 
 // define the initial state
 const initialState : Prompt[] = [];
