@@ -67,8 +67,8 @@ export default function Anvil() {
             <button onClick={surprisemePrompt} className="absolute right-4 bottom-4 px-4 py-2 text-white transition-all hover:scale-[1.02] active:scale-95 rounded-lg bg-[var(--clr-p)]" type="button">Surpris Me</button>
         </div>
         <div className="w-full flex justify-between items-center gap-4">
-            <button className="h-full w-full px-4 py-2 text-white transition-all hover:scale-[1.02] active:scale-95 rounded-lg bg-[var(--clr-p)]" type="submit">Generate</button>
-            <button className="h-full w-full px-4 py-2 text-white transition-all hover:scale-[1.02] active:scale-95 rounded-lg bg-[var(--clr-p)]" type="button" title="Publish your generated prompt to community">Publish</button>
+            <button disabled={status.publishing} className={`disabled:bg-black h-full w-full px-4 py-2 text-white transition-all hover:scale-[1.02] active:scale-95 rounded-lg bg-[var(--clr-p)]`} type="submit">Generate</button>
+            <button onClick={publishPrompt} disabled={status.generating} className={`disabled:bg-black h-full w-full px-4 py-2 text-white transition-all hover:scale-[1.02] active:scale-95 rounded-lg bg-[var(--clr-p)]`} type="button" title="Publish your generated prompt to community">Publish</button>
         </div>
     </form>
   )
