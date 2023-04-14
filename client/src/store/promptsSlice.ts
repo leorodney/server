@@ -38,5 +38,5 @@ const promptsReducer = createSlice({
 });
 
 // export the actions and reducer
-export const { addPrompt, setPrompts, searchPrompt } = promptsReducer.actions;
+export const { addPrompt, setPrompts, searchPrompt, setSearchQuery } = promptsReducer.actions;
 export default promptsReducer.reducer;
