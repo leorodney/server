@@ -6,6 +6,14 @@ import { KeyboardEvent, useState } from 'react';
 import { setSearchQuery as setSearchQueryAction } from '../store/promptsSlice';
 
 export default function Hero() {
+  const [searchQuery, setSearchQuery] = useState<string>('' as string); // [searchQuery, setSearchQuery
+  const dispatch = useDispatch();
+  
+  const searchQueryDispatcher = (e: KeyboardEvent<HTMLInputElement>)=>{
+    if(e.key !== 'Enter' || searchQuery == '') return;
+    dispatch(setSearchQueryAction(searchQuery));
+  }
+
   return (
     <main className='h-[80vh] w-screen text-white flex items-center justify-center gap-10 flex-col bg-cover bg-center bg-no-repeat backdrop:brightness-75' style={{backgroundImage: `url(${HeroBG})`}}>
       <Header/>
