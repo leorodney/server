@@ -10,22 +10,53 @@ export default function Anvil() {
   const dispatch = useDispatch();
 
   const capturePrompt = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setPrompt({...prompt, value: e.target.value});
+    dispatch(setPrompt({...prompt, value: e.target.value}))
   }
 
   const generatePrompt : Submit = async (e) => {
     e.preventDefault();
     if(!prompt.value) return alert("Please enter a prompt");
     try{
-      setStatus({generating: true, publishing: false});
-      const { data } = await axios.post(`${import.meta.env.VITE_LOCAL_SERVER}:${import.meta.env.VITE_LOCAL_PORT}/production`, {prompt: prompt.value});
+      dispatch(setStatus({generating: true, publishing: false}));
+      const { data } = await axios.post(`${import.meta.env.VITE_LOCAL_SERVER}:${import.meta.env.VITE_LOCAL_PORT}/production`, {prompt: prompt.value}, {withCredentials: true});
       console.log(data);
-      setPrompt({...prompt, img: `data:image/jpg;base64,${data.img}`});
+      dispatch(setPrompt({...prompt, img: `data:image/jpg;base64,${data.img}`}));
     }catch{
       console.error("Error generating prompt");
       alert("Error while generating prompt, please try again later in 1 minute");
     }finally{
-      setStatus({generating: false, publishing: false});
+      dispatch(setStatus({generating: false, publishing: false}));
+    }
+  }
+
+  const publishPrompt : Submit = async (e) => {
+    e.preventDefault();
+    if(!prompt.value) return alert("Please enter a prompt");
+    try{
+      dispatch(setStatus({generating: false, publishing: true}));
+      const { data } = await axios.post(`${import.meta.env.VITE_LOCAL_SERVER}:${import.meta.env.VITE_LOCAL_PORT}/prompt`, {value: prompt.value, img: prompt.img}, {withCredentials: true});
+      console.log(data);
+    }catch{
+      console.error("Error publishing prompt");
+      alert("Error while publishing prompt, please try again later in 1 minute");
+    }finally{
+      dispatch(setStatus({generating: false, publishing: false}));
+    }
+  }
+
+  const surprisemePrompt : Submit = async (e) => {
+    // e.preventDefault();
+    // if(!prompt.value) return alert("Please enter a prompt");
+    try{
+      // dispatch(setStatus({generating: true, publishing: false}));
+      const { data } = await axios.get(`${import.meta.env.VITE_LOCAL_SERVER}:${import.meta.env.VITE_LOCAL_PORT}/surpriseme`);
+      console.log(data);
+      dispatch(setPrompt({...prompt, value: data.prompt}));
+    }catch{
+      console.error("Error generating prompt");
+      alert("Error while generating prompt, please try again later in 1 minute");
+    }finally{
+      // dispatch(setStatus({generating: false, publishing: false}));
     }
   }
 
