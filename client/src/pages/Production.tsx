@@ -1,9 +1,7 @@
-import { useState } from 'react';
 import productionBG from '../assets/production.jpeg';
 import Anvil from '../components/Anvil';
 import Header from '../components/Header';
 import Projection from '../components/Projection';
-import { Prompt }  from "../interfaces/prompt";
 import useAuthorization from '../hooks/authorization';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,10 +9,6 @@ export default function Production() {
   const authorization = useAuthorization();
   const navigate = useNavigate();
   !authorization.isAuthenticated ? navigate("/login") : null;
-
-  const PromptInterface : Prompt = { img: "", author: "", value: "" };
-  const [prompt, setPrompt] = useState(PromptInterface);  
-  const [status, setStatus] = useState({generating: false, publishing: false});
 
   return (
     <main className="h-screen w-screen flex items-center justify-center flex-col bg-center bg-cover bg-no-repeat" style={{backgroundImage: `url(${productionBG})`}}>
