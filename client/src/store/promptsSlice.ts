@@ -1,9 +1,12 @@
 // setup the prompts slice of the store
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Prompt } from "../interfaces/prompt";
+import { Prompt, PromptState } from "../interfaces/prompt";
 
 // define the initial state
-const initialState : Prompt[] = [];
+const initialState : PromptState = {
+    prompts: [],
+    search: ""
+};
 
 // create the slice
 const promptsReducer = createSlice({
@@ -12,26 +15,31 @@ const promptsReducer = createSlice({
     reducers: {
         // define the reducers
         addPrompt: (state, action: PayloadAction<Prompt>) => {
-            state.push(action.payload);
+            state.prompts.push(action.payload);
         },
 
         setPrompts: (state, action: PayloadAction<Prompt[]>) => {
-            state = action.payload;
+            state.prompts = action.payload;
         },
 
         // get random prompt
-        // getRandomPrompt: (state: Prompt[]) => {
-        //     return state[Math.floor(Math.random() * state.length)];
-        // },
+        getRandomPrompt: (state: Prompt[]) => {
+            return state[Math.floor(Math.random() * state.length)];
+        },
+
+        // set search query
+        setSearchQuery: (state, action: PayloadAction<string>) => {
+            state.search = action.payload;
+        },
 
         // search for prompt by author or value
-        searchPrompt: (state, action: PayloadAction<string>) => {
-            return state.filter(prompt => prompt.author.toLowerCase().includes(action.payload) || prompt.value.toLowerCase().includes(action.payload));
+        searchPrompt: (state) => {
+            return state.prompts.filter(prompt => prompt.author.toLowerCase().includes(state.search) || prompt.value.toLowerCase().includes(state.search));
         }
 
     }
 });
 
 // export the actions and reducer
-export const { addPrompt, setPrompts, searchPrompt } = promptsReducer.actions;
+export const { addPrompt, setPrompts, getRandomPrompt, setSearchQuery, searchPrompt } = promptsReducer.actions;
 export default promptsReducer.reducer;
