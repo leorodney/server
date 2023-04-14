@@ -1,10 +1,17 @@
-// setup configuration middleware
+// Description: This file contains all the configuration files for the server
+// load .env variables
+import dotenv from "dotenv";
+dotenv.config();
+
+// setup configuration files
+import { ConfigOptions } from "cloudinary";
 import MongoStore from "connect-mongo";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
 import session from "express-session";
 import helmet from "helmet";
 import lusca from "lusca";
+import { Configuration, CreateCompletionRequest } from "openai";
 
 /** 
  * setup limiter middleware (rate limiter) configuration 
@@ -75,3 +82,34 @@ export const sessionConfig = session({
         ttl: 60 * 60 * 24, // 1 day
     }),
 });
+
+/**
+ * **Cloudinary** config
+ */
+export const cloudinaryConfig : ConfigOptions = {
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME as string,
+    api_key: process.env.CLOUDINARY_API_KEY as string,
+    api_secret: process.env.CLOUDINARY_API_SECRET as string
+}
+
+/**
+ * **OpenAI** config
+ */
+export const openaiConfig = new Configuration({
+    apiKey: process.env.OPENAI_API_KEY as string,
+})
+
+/**
+ * **Sueprise Me Prompt** config
+ */
+export const surpriseMePromptConfig : CreateCompletionRequest = {
+    model: "text-davinci-003",
+    prompt: "Surprise me with a prompt from 12 word to generate an image.",
+    // max_tokens: 1, // max number of tokens to generate
+    // temperature: 0.9, // higher temperature means more random completions
+    // top_p: 1, // top_p is the cumulative probability for top-k filtering
+    // frequency_penalty: 0, // how much to penalize new tokens based on their existing frequency in the text so far
+    // presence_penalty: 0, // how much to penalize new tokens based on whether they appear in the text so far
+    // stop: [""] // stop token
+}
+    
