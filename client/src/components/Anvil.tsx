@@ -5,13 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { StoreState } from "../interfaces/store";
 import { setPrompt, setStatus } from "../store/productionSlice";
 
-interface Props{
-  prompt: Prompt;
-  setPrompt: React.Dispatch<React.SetStateAction<Prompt>>;
-  setStatus: React.Dispatch<React.SetStateAction<{generating: boolean; publishing: boolean}>>
-}
-
-export default function Anvil({prompt, setPrompt, setStatus}: Props) {
+export default function Anvil() {
+  const { prompt, status } = useSelector((state: StoreState) => state.production);
+  const dispatch = useDispatch();
 
   const capturePrompt = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setPrompt({...prompt, value: e.target.value});
