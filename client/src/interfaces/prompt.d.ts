@@ -18,3 +18,9 @@ export interface PromptAction{
 export interface Prompts{
     prompts:  Prompt[] 
 };
+
+// redux prompt state type:
+export interface PromptState extends Prompts{
+    search: string,
+}
+    
