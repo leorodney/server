@@ -7,25 +7,22 @@ export const registerRoute = async (req: Request, res: Response)=>{
 
     try{
         if(await User.findOne({email: { $eq: email }})){
-            return res.status(409).json({message: `User with email: ${email}, already exists`});
+            return res.status(409).json({error: `User with email: ${email}, already exists`, ok: false});
         }
-        if(await User.findOne({username: { $eq: username }}).setOptions({sanitizeFilter: true})){
-            return res.status(409).json({message: `User with username: ${username}, already exists`});
+        if(await User.findOne({username: { $eq: username }})){
+            return res.status(409).json({error: `User with username: ${username}, already exists`, ok: false});
         }
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = new User({firstname, lastname, email, username, password: hashedPassword});
-        user.save();
+
         req.session.user = {
             authenticated: true,
             username: user.username,
             uid: user._id
         };
-        req.session.save((err)=>{
-            if(err){
-                console.error(err);
-            }
-        });
-        res.status(201).json({message: 'User created successfully'});
+
+        user.save();
+        return res.status(201).json({user: { uid: user._id, username: user.username }, message: 'User created successfully', ok: true});
     }
     catch(error){
         console.log(error);

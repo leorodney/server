@@ -5,6 +5,7 @@ dotenv.config();
 
 // setup configuration files
 import { ConfigOptions } from "cloudinary";
+// setup configuration middleware
 import MongoStore from "connect-mongo";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
@@ -112,4 +113,3 @@ export const surpriseMePromptConfig : CreateCompletionRequest = {
     // presence_penalty: 0, // how much to penalize new tokens based on whether they appear in the text so far
     // stop: [""] // stop token
 }
-    

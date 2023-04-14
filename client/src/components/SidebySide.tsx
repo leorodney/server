@@ -10,7 +10,7 @@ export default function SidebySide(form: Swap & FormInterface) {
             <Motivation author="" value="" img=""/>
         </section>
         <section className="h-[100%] w-[50vw] flex items-center justify-center flex-col bg-[var(--bg-gray)]">
-            <Form title={form.title} fields={form.fields} />
+            <Form {...form} />
         </section>
     </section>
   )

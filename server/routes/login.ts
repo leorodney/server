@@ -5,21 +5,18 @@ import bcrypt from 'bcrypt';
 export const loginRoute = async (req: Request, res: Response)=>{
     const {emailorusername, password} = req.body;
     
-    console.log(req.session);
-
+    console.log({SID: req.sessionID})
     try{
 
         if(req.session.user?.authenticated){
-            console.log({SID: req.sessionID})
-            return res.status(200).json({message: 'Already logged in', ok: true});
+            const { username, uid } = req.session.user;
+            return res.status(200).json({user: { uid, username }, message: 'Already logged in', error: "", ok: true});
         }
 
         const user = await User.findOne({$or: [{username: { $eq: emailorusername } }, {email: { $eq: emailorusername } }]});        
-        if(!user){ 
-            return res.status(404).json({message: 'User not found', ok: false}); 
-        }
-        if(!await bcrypt.compare(password, user.password)){
-            return res.status(401).json({message: 'Invalid password or Email/Username', ok: false});
+        if(!user || !await bcrypt.compare(password, user.password)){ 
+            // return res.status(404).json({error: 'No user with this Email|Username', ok: false}); 
+            return res.status(401).json({error: 'Invalid password or Email|Username', ok: false});
         }
 
         req.session.user = {
@@ -28,7 +25,7 @@ export const loginRoute = async (req: Request, res: Response)=>{
             uid: user._id
         };
         
-        res.status(200).json({message: 'Login successful', ok: true});
+        return res.status(200).json({user: { uid: user._id, username: user.username }, message: 'Login successful', ok: true});
     }
     catch(error){
         console.log(error);
