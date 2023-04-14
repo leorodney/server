@@ -14,8 +14,8 @@ export default function Production() {
     <main className="h-screen w-screen flex items-center justify-center flex-col bg-center bg-cover bg-no-repeat" style={{backgroundImage: `url(${productionBG})`}}>
       {/* <Header/> */}
       <section className='h-[540px] w-[75%] px-6 py-8 flex items-center gap-4 bg-gray-200 rounded-lg'>
-        <Projection img={prompt.img} generating={status.generating}/>
-        <Anvil prompt={prompt} setPrompt={setPrompt} setStatus={setStatus}/>
+        <Projection/>
+        <Anvil/>
       </section>
     </main>
   )
