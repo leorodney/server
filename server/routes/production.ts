@@ -1,16 +1,24 @@
 import { Request, Response } from 'express';
-import dotenv from 'dotenv';
-// openai dall-e model
-import { OpenAIApi, Configuration } from 'openai';
 // load .env variables
+import dotenv from 'dotenv';
 dotenv.config();
+// openai dall-e model
+import { OpenAIApi } from 'openai';
+// openai config
+import { openaiConfig } from '../configs';
 
-const openai = new OpenAIApi(new Configuration({ apiKey: process.env.OPENAI_API_KEY }));
+const openai = new OpenAIApi(openaiConfig);
 
+/**
+ * Generate `image` from prompt using the `openai` api and the **`dall-e`** model
+ * @param req 
+ * @param res 
+ */
 export const productionRoute = async (req: Request, res: Response)=>{
     const { prompt } = req.body;
     try{
         console.log("\t[ LEORODNEY ]: ", prompt);
+        // sending generated image to the client using the openai api and the dall-e model
         const dalleResponse = await openai.createImage({
             prompt,
             n: 1,
