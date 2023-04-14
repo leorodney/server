@@ -1,25 +1,26 @@
 import { Request, Response } from 'express';
+// load .env variables
 import dotenv from 'dotenv';
+dotenv.config();
 // cloudinary
 import { v2 as cloudinary } from 'cloudinary';
 // mongodb models
 import Prompt from '../models/Prompt';
-// load .env variables
-dotenv.config();
+// cloudinary config
+import { cloudinaryConfig } from '../configs';
 
 // cloudinary config
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME as string,
-    api_key: process.env.CLOUDINARY_API_KEY as string,
-    api_secret: process.env.CLOUDINARY_API_SECRET as string
-});
+cloudinary.config(cloudinaryConfig);
 
 export const promptRoute = async (req: Request, res: Response)=>{
-    const { author, value, img } = req.body;
+    const { value, img } = req.body;
     try{
+        if(!req.session.user?.authenticated){
+            return res.status(401).json({error: 'Not authenticated', ok: false});
+        }
         const uploadResponse = await cloudinary.uploader.upload(img, { folder: process.env.CLOUDINARY_FOLDER as string });
-        const newPrompt = await Prompt.create({ author, value, img: uploadResponse.secure_url });
-        res.status(200).json(newPrompt);
+        const newPrompt = await Prompt.create({ author: req.session.user.uid, value, img: uploadResponse.secure_url });
+        res.status(201).json(newPrompt);
     }
     catch(error){
         console.log(error);

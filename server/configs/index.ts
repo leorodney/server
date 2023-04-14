@@ -112,4 +112,3 @@ export const surpriseMePromptConfig : CreateCompletionRequest = {
     // presence_penalty: 0, // how much to penalize new tokens based on whether they appear in the text so far
     // stop: [""] // stop token
 }
-    
