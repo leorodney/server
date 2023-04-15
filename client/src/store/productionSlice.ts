@@ -1,15 +1,13 @@
-// production slice
-// Compare this snippet from client/src/store/productionSlice.ts:
-// // setup the production slice of the store
+// setup the production slice of the store
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ProductionState } from "../interfaces/production";
-// import { ProductionState } from "../interfaces/production";
 
 // define the initial state
 const initialState : ProductionState = {
     status:{
         generating: false,
-        publishing: false
+        publishing: false,
+        visibility: false,
     },
     prompt: {
         author: "",
@@ -25,7 +23,9 @@ const productionReducer = createSlice({
     reducers: {
         // define the reducers
         setStatus: (state, action: PayloadAction<ProductionState["status"]>) => {
-            state.status = action.payload;
+            state.status.generating = action.payload.generating || false;
+            state.status.publishing = action.payload.publishing || false;
+            state.status.visibility = action.payload.visibility || false;
         },
         setPrompt: (state, action: PayloadAction<ProductionState["prompt"]>) => {
             state.prompt = action.payload;
