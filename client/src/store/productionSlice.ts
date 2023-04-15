@@ -1,13 +1,14 @@
 // setup the production slice of the store
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ProductionState } from "../interfaces/production";
+import { ProductionState, Status } from "../interfaces/production";
 
 // define the initial state
 const initialState : ProductionState = {
+    visibility: false,
     status:{
         generating: false,
         publishing: false,
-        visibility: false,
+        prompting: false,
     },
     prompt: {
         author: "",
@@ -22,10 +23,12 @@ const productionReducer = createSlice({
     initialState,
     reducers: {
         // define the reducers
-        setStatus: (state, action: PayloadAction<ProductionState["status"]>) => {
-            state.status.generating = action.payload.generating || false;
-            state.status.publishing = action.payload.publishing || false;
-            state.status.visibility = action.payload.visibility || false;
+        setVisibility: (state, action: PayloadAction<boolean>) => { state.visibility = action.payload },
+        setStatus: (state, action: PayloadAction<Status>) => {
+            // loop over all the keys in the status object and set the value to the value in the action payload or false
+            for (let key in state.status){
+                state.status[key] = action.payload[key] || false;
+            }
         },
         setPrompt: (state, action: PayloadAction<ProductionState["prompt"]>) => {
             state.prompt = action.payload;
@@ -34,5 +37,5 @@ const productionReducer = createSlice({
 });
 
 // export the actions and reducer
-export const { setStatus, setPrompt } = productionReducer.actions;
+export const { setVisibility, setStatus, setPrompt } = productionReducer.actions;
 export default productionReducer.reducer;
