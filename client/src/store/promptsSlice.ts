@@ -23,7 +23,7 @@ const promptsReducer = createSlice({
         },
 
         // get random prompt
-        getRandomPrompt: (state: Prompt[]) => {
+        getRandomPrompt: (state: PromptState["prompts"]) => {
             return state[Math.floor(Math.random() * state.length)];
         },
 
@@ -33,7 +33,7 @@ const promptsReducer = createSlice({
         },
 
         // search for prompt by author or value
-        searchPrompt: (state) => {
+        searchPrompt: (state: PromptState) => {
             return state.prompts.filter(prompt => prompt.author.toLowerCase().includes(state.search) || prompt.value.toLowerCase().includes(state.search));
         }
 
