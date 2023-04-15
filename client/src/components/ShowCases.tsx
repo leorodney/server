@@ -1,12 +1,8 @@
 import Prompt from "./Prompt"
 import HeroBG from '../assets/HeroBG.png';
 import Loader from "./Loader";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { StoreState } from "../interfaces/store";
-import { useEffect } from "react";
-import axios from "axios";
-import { setPrompts } from "../store/promptsSlice";
-import { setStatus } from "../store/productionSlice";
 
 export default function ShowCases() {
   const searchQuery = useSelector((state: StoreState) => state.prompts.search);
