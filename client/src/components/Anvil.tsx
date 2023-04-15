@@ -3,7 +3,8 @@ import React from "react";
 import { Submit } from "../interfaces/form";
 import { useDispatch, useSelector } from "react-redux";
 import { StoreState } from "../interfaces/store";
-import { setPrompt, setStatus } from "../store/productionSlice";
+import { setPrompt, setStatus, setVisibility } from "../store/productionSlice";
+import { addPrompt } from "../store/promptsSlice";
 
 export default function Anvil() {
   const { prompt, status } = useSelector((state: StoreState) => state.production);
@@ -34,12 +35,14 @@ export default function Anvil() {
     try{
       dispatch(setStatus({publishing: true}));
       const { data } = await axios.post(`${import.meta.env.VITE_LOCAL_SERVER}:${import.meta.env.VITE_LOCAL_PORT}/prompt`, {value: prompt.value, img: prompt.img}, {withCredentials: true});
+      dispatch(addPrompt(data));
       console.log(data);
     }catch{
       console.error("Error publishing prompt");
       alert("Error while publishing prompt, please try again later in 1 minute");
     }finally{
       dispatch(setStatus({publishing: false}));
+      dispatch(setVisibility(false));
     }
   }
 
