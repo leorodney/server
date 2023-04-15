@@ -8,7 +8,9 @@ import { setSearchQuery as setSearchQueryAction } from '../store/promptsSlice';
 export default function Hero() {
   const [searchQuery, setSearchQuery] = useState<string>('' as string); // [searchQuery, setSearchQuery
   const dispatch = useDispatch();
-  
+
+  console.log(searchQuery);
+
   const searchQueryDispatcher = (e: KeyboardEvent<HTMLInputElement>)=>{
     if(e.key !== 'Enter' || searchQuery == '') return;
     dispatch(setSearchQueryAction(searchQuery));
