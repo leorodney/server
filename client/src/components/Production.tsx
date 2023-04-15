@@ -8,7 +8,7 @@ import { setVisibility } from '../store/productionSlice';
 export default function Production() {
   // hide the production component if the visibility is false in the store by clicking outside the production component
   const dispatch = useDispatch();
-  const { visibility } = useSelector((state: StoreState) => state.production.status);
+  const { visibility } = useSelector((state: StoreState) => state.production);
   const productionRef = useRef<HTMLElement>(null);
 
   const hideProduction = (e: any) => {
