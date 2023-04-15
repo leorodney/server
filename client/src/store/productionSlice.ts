@@ -9,6 +9,7 @@ const initialState : ProductionState = {
         generating: false,
         publishing: false,
         prompting: false,
+        fetching: false,
     },
     prompt: {
         author: "",
