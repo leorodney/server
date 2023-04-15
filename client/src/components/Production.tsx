@@ -3,7 +3,7 @@ import Anvil from './Anvil';
 import Projection from './Projection';
 import { StoreState } from '../interfaces/store';
 import { useEffect, useRef } from 'react';
-import { setStatus } from '../store/productionSlice';
+import { setVisibility } from '../store/productionSlice';
 
 export default function Production() {
   // hide the production component if the visibility is false in the store by clicking outside the production component
@@ -13,7 +13,7 @@ export default function Production() {
 
   const hideProduction = (e: any) => {
     if(productionRef && e.target?.id !== "production-visibility" && !productionRef.current?.contains(e.target as Node)) {
-      dispatch(setStatus({visibility: false}));
+      dispatch(setVisibility(false));
     }
   }
   

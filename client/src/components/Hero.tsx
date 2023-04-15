@@ -3,7 +3,7 @@ import Header from './Header';
 import { useDispatch } from 'react-redux';
 import { KeyboardEvent, useState } from 'react';
 import { setSearchQuery as setSearchQueryAction } from '../store/promptsSlice';
-import { setStatus } from '../store/productionSlice';
+import { setVisibility } from '../store/productionSlice';
 
 export default function Hero() {
   const [searchQuery, setSearchQuery] = useState<string>('' as string);
@@ -21,7 +21,7 @@ export default function Hero() {
       <Header/>
       <div className='h-14 w-[70%] flex items-center justify-between gap-4'>
         <input onChange={e => setSearchQuery(e.target.value)} onKeyDown={searchQueryDispatcher} className='h-full w-full px-4 py-2 text-black bg-white rounded-lg focus:outline-[var(--clr-p)]' type="text" placeholder='Search in the community...'/>
-        <button id='production-visibility' onClick={() => dispatch(setStatus({visibility: true}))} className='h-full px-10 py-2 text-white text-lg transition-all hover:scale-[1.02] active:scale-95 rounded-lg bg-[var(--clr-p)]'>Generate</button>
+        <button id='production-visibility' onClick={() => dispatch(setVisibility(true))} className='h-full px-10 py-2 text-white text-lg transition-all hover:scale-[1.02] active:scale-95 rounded-lg bg-[var(--clr-p)]'>Generate</button>
       </div>
     </main>
   )
