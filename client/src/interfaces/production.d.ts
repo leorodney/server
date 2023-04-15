@@ -4,6 +4,7 @@ import { Prompt } from "./prompt";
 export declare interface Status{
     generating?: boolean = false;
     publishing?: boolean = false;
+    visibility?: boolean = false;
 }
 // declare interface for projection that extends Status:
 export declare interface Projection extends Status{
