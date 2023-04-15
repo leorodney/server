@@ -17,7 +17,7 @@ export default function Anvil() {
     e.preventDefault();
     if(!prompt.value) return alert("Please enter a prompt");
     try{
-      dispatch(setStatus({generating: true, publishing: false}));
+      dispatch(setStatus({generating: true}));
       const { data } = await axios.post(`${import.meta.env.VITE_LOCAL_SERVER}:${import.meta.env.VITE_LOCAL_PORT}/production`, {prompt: prompt.value}, {withCredentials: true});
       console.log(data);
       dispatch(setPrompt({...prompt, img: `data:image/jpg;base64,${data.img}`}));
@@ -25,30 +25,27 @@ export default function Anvil() {
       console.error("Error generating prompt");
       alert("Error while generating prompt, please try again later in 1 minute");
     }finally{
-      dispatch(setStatus({generating: false, publishing: false}));
+      dispatch(setStatus({generating: false}));
     }
   }
 
-  const publishPrompt : Submit = async (e) => {
-    e.preventDefault();
+  const publishPrompt : Submit = async () => {
     if(!prompt.value) return alert("Please enter a prompt");
     try{
-      dispatch(setStatus({generating: false, publishing: true}));
+      dispatch(setStatus({publishing: true}));
       const { data } = await axios.post(`${import.meta.env.VITE_LOCAL_SERVER}:${import.meta.env.VITE_LOCAL_PORT}/prompt`, {value: prompt.value, img: prompt.img}, {withCredentials: true});
       console.log(data);
     }catch{
       console.error("Error publishing prompt");
       alert("Error while publishing prompt, please try again later in 1 minute");
     }finally{
-      dispatch(setStatus({generating: false, publishing: false}));
+      dispatch(setStatus({publishing: false}));
     }
   }
 
-  const surprisemePrompt : Submit = async (e) => {
-    // e.preventDefault();
-    // if(!prompt.value) return alert("Please enter a prompt");
+  const surprisemePrompt : Submit = async () => {
     try{
-      // dispatch(setStatus({generating: true, publishing: false}));
+      dispatch(setStatus({prompting: true}));
       const { data } = await axios.get(`${import.meta.env.VITE_LOCAL_SERVER}:${import.meta.env.VITE_LOCAL_PORT}/surpriseme`);
       console.log(data);
       dispatch(setPrompt({...prompt, value: data.prompt}));
@@ -56,7 +53,7 @@ export default function Anvil() {
       console.error("Error generating prompt");
       alert("Error while generating prompt, please try again later in 1 minute");
     }finally{
-      // dispatch(setStatus({generating: false, publishing: false}));
+      dispatch(setStatus({prompting: false}));
     }
   }
 
