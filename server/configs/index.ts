@@ -104,7 +104,11 @@ export const openaiConfig = new Configuration({
  */
 export const surpriseMePromptConfig : CreateCompletionRequest = {
     model: "text-davinci-003",
-    prompt: "Surprise me with a prompt from 12 word to generate an image.",
+    prompt: `Generate a prompt that would inspire an artist to create unique and visually striking images.
+    The prompt should be diverse in nature and cover a range of styles,
+    themes, and subjects. Consider using words or phrases that evoke strong emotions,
+    vivid imagery, or interesting concepts. Your prompt should be specific enough to guide the artist,
+    but open-ended enough to encourage creative interpretation.`,
     // max_tokens: 1, // max number of tokens to generate
     // temperature: 0.9, // higher temperature means more random completions
     // top_p: 1, // top_p is the cumulative probability for top-k filtering
