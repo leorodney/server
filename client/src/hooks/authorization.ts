@@ -3,6 +3,7 @@ import axios from "axios";
 import { login, logout } from "../store/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { StoreState } from "../interfaces/store";
+import { useNavigate } from "react-router-dom";
 /**
  * **Authorization** hook that check if user is `authenticated` or not by checking the server for a cookie
  * and if the cookie is valid it will return the `user object` and store it (dispatch it) in the `store`
@@ -12,6 +13,7 @@ import { StoreState } from "../interfaces/store";
 export default function useAuthorization() {    
     const authorization = useSelector((state: StoreState) => state.user);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -23,7 +25,9 @@ export default function useAuthorization() {
                 }
                 console.log("after auth", authorization);
             } catch (error : any) {
+                console.log("You are not logged in");
                 dispatch(logout());
+                navigate("/login");
             }
         }
         checkAuth();
