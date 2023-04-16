@@ -10,10 +10,8 @@ import useAuthorization from "../hooks/authorization";
 
 export default function Login() {
   // check if user is authenticated and redirect to home if true
-  const authorization = useAuthorization();
+  useAuthorization("/login");
   const navigate = useNavigate();
-  authorization.isAuthenticated ? navigate("/") : null;
-  console.log("Login:",authorization);
   
   const [loginData, setLoginData] = useState({emailorusername: "", password: ""} as Login);
   const [errors, setErrors] = useState([] as string[]);

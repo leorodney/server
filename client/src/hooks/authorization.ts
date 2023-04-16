@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
  * by implementing that to protect the `home (/)` and the `community (\community)` routes.
  * @returns {AuthUser} user object
 */
-export default function useAuthorization() {    
+export default function useAuthorization(fallbackRoute: string) {    
     const authorization = useSelector((state: StoreState) => state.user);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -18,16 +18,14 @@ export default function useAuthorization() {
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                console.log("before auth", authorization);
                 const authResponse = await axios.get(`${import.meta.env.VITE_LOCAL_SERVER}:${import.meta.env.VITE_LOCAL_PORT}/auth`, {withCredentials: true});
                 if(authResponse.data.ok){
                     dispatch(login(authResponse.data.user));
+                    navigate("/");
                 }
-                console.log("after auth", authorization);
             } catch (error : any) {
-                console.log("You are not logged in");
                 dispatch(logout());
-                navigate("/login");
+                navigate(fallbackRoute);
             }
         }
         checkAuth();
