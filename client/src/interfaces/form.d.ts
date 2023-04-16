@@ -11,6 +11,8 @@ export interface Form {
 export interface Field {
     name: string;
     type: string;
+    label: string;
+    icon: string;
     placeholder: string;
 }
 
