@@ -12,9 +12,8 @@ import { login } from "../store/authSlice";
 
 export default function Register() {
   // check if user is authenticated and redirect to home if true
-  const authorization = useAuthorization();
+  useAuthorization("/register");
   const navigate = useNavigate();
-  authorization.isAuthenticated ? navigate("/") : null;
   
   const [registerData, setRegisterData] = useState({fullname: "", email: "", username: "", password: "", confirmpassword: ""} as Register);
   const [errors, setErrors] = useState([] as string[]);
