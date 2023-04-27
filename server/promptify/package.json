@@ -1,0 +1,41 @@
+{
+  "name": "leorodney-prompting-microservice",
+  "version": "1.0.0",
+  "description": "ai image generator server side",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon --exec ts-node index.ts",
+    "test": "mocha index.js --exit",
+    "build": "tsc"
+  },
+  "keywords": [
+    "leorodney",
+    "ai image generator",
+    "ai",
+    "openai",
+    "dalle",
+    "image-generator"
+  ],
+  "author": "whybe7",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-rate-limit": "^6.7.0",
+    "helmet": "^6.1.1",
+    "lusca": "^1.7.0",
+    "openai": "^3.2.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17",
+    "@types/lusca": "^1.7.1",
+    "@types/node": "^18.15.9",
+    "mocha": "^10.2.0",
+    "nodemon": "^2.0.21",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.2"
+  }
+}
