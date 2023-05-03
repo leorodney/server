@@ -1,7 +1,4 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
-name: NodeJS Server CI
+name: Leorodney Server CI
 
 on:
   push:
@@ -16,12 +13,11 @@ jobs:
     
     defaults:
        run:
-         working-directory: ./server
+         working-directory: ./
 
     strategy:
       matrix:
         node-version: [18.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     # Server Dependencies Compatibility
@@ -31,7 +27,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        cache-dependency-path: './server/package-lock.json'
+        cache-dependency-path: './package-lock.json'
     - run: npm i
     - run: npm ci
     - run: npm run build --if-present
