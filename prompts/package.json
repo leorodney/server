@@ -6,7 +6,6 @@
     "scripts": {
         "start": "node index.js",
         "dev": "nodemon --exec ts-node index.ts",
-        "test": "mocha index.js --exit",
         "build": "tsc"
     },
     "keywords": [
