@@ -16,44 +16,58 @@ jobs:
         node-version: [18.x]
 
     steps:
-    # The Microservices CI workflow
+    # Microservices CI - Auth
     - uses: actions/checkout@v3
-    - name: Microservices CI
+    - name: Authentication Microservice - CI
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: './auth/package-lock.json'
 
-    # Microservices CI - Auth
-    - name: Authentication Microservice - CI
-      uses: actions/setup-node@v3
     - working-directory: ./auth
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test --if-present
 
     # Microservices CI - Production
+    - uses: actions/checkout@v3
     - name: Production Microservice - CI
       uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: './production/package-lock.json'
+
     - working-directory: ./production
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test --if-present
 
     # Microservices CI - Promptify
+    - uses: actions/checkout@v3
     - name: Promptify Microservice - CI
       uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: './promptify/package-lock.json'
+        
     - working-directory: ./promptify
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test --if-present
 
     # Microservices CI - Prompts
+    - uses: actions/checkout@v3
     - name: Prompts Microservice - CI
       uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: './prompts/package-lock.json'
+
     - working-directory: ./prompts
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test --if-present
-
-
-
