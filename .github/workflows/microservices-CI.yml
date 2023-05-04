@@ -1,4 +1,4 @@
-name: Leorodney Micro-CI
+name: Micro-CI
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  microservices-ci:
+  Microservices-CI:
   
     runs-on: ubuntu-latest
 
