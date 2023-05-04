@@ -1,4 +1,4 @@
-name: Leorodney Microservices CI
+name: Leorodney Micro-CI
 
 on:
   push:
@@ -24,6 +24,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+          cache-dependency-path: ${{ matrix.microservice }}/package-lock.json
 
       - name: Install Dependencies Of Microservice ${{ matrix.microservice }}
         working-directory: ${{ matrix.microservice }}
