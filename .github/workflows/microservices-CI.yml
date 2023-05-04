@@ -26,10 +26,6 @@ jobs:
     # Microservices CI - Auth
     - name: Authentication Microservice - CI
     - working-directory: ./auth
-      uses: actions/setup-node@v3
-      with:
-        cache: 'npm'
-        cache-dependency-path: './auth/package-lock.json'
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test --if-present
@@ -37,10 +33,6 @@ jobs:
     # Microservices CI - Production
     - name: Production Microservice - CI
     - working-directory: ./production
-      uses: actions/setup-node@v3
-      with:
-        cache: 'npm'
-        cache-dependency-path: './production/package-lock.json'
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test --if-present
@@ -48,10 +40,6 @@ jobs:
     # Microservices CI - Promptify
     - name: Promptify Microservice - CI
     - working-directory: ./promptify
-      uses: actions/setup-node@v3
-      with:
-        cache: 'npm'
-        cache-dependency-path: './promptify/package-lock.json'
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test --if-present
@@ -59,10 +47,6 @@ jobs:
     # Microservices CI - Prompts
     - name: Prompts Microservice - CI
     - working-directory: ./prompts
-      uses: actions/setup-node@v3
-      with:
-        cache: 'npm'
-        cache-dependency-path: './prompts/package-lock.json'
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test --if-present
