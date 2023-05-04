@@ -24,7 +24,7 @@
 **/.sw?
 
 # Envirement variables
-/server/**/.env
+*/.env
 
 # Rest client vscode ext
 **.http
