@@ -25,6 +25,7 @@ jobs:
 
     # Microservices CI - Auth
     - name: Authentication Microservice - CI
+      uses: actions/setup-node@v3
     - working-directory: ./auth
     - run: npm ci
     - run: npm run build --if-present
@@ -32,6 +33,7 @@ jobs:
 
     # Microservices CI - Production
     - name: Production Microservice - CI
+      uses: actions/setup-node@v3
     - working-directory: ./production
     - run: npm ci
     - run: npm run build --if-present
@@ -39,6 +41,7 @@ jobs:
 
     # Microservices CI - Promptify
     - name: Promptify Microservice - CI
+      uses: actions/setup-node@v3
     - working-directory: ./promptify
     - run: npm ci
     - run: npm run build --if-present
@@ -46,6 +49,7 @@ jobs:
 
     # Microservices CI - Prompts
     - name: Prompts Microservice - CI
+      uses: actions/setup-node@v3
     - working-directory: ./prompts
     - run: npm ci
     - run: npm run build --if-present
