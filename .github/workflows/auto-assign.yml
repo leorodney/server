@@ -15,5 +15,4 @@ jobs:
       uses: pozil/auto-assign-issue@v1
       with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          assignees: whybe7
-          numOfAssignee: 1
+          assignees: ${{ github.event.pull_request.user.login }}
