@@ -10,8 +10,9 @@ COPY package*.json ./
 # copy source code
 COPY . .
 
-# install dependencies
+# install dependencies build the microservice container
 RUN npm install
+RUN npm run build
 
 # expose port 8000
 EXPOSE 8000
