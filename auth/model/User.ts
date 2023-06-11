@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 import { Schema, model } from 'mongoose';
 
-const User = new mongoose.Schema({
+const User = new Schema({
     firstname: { type: String, required: true },
     lastname: { type: String, required: true },
     username: { type: String, unique: true, required: true },
@@ -13,4 +13,4 @@ const User = new mongoose.Schema({
     timestamps: true
 });
 
-export default mongoose.model('User', User);
+export default model('User', User);
