@@ -1,8 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
 // Routes
-import { communityRoute } from "./routes";
-import { promptRoute } from "./routes/new";
+import { communityRoute, userPromptsRoute } from "./routes";
+import { downloadPromptRoute, likePromptRoute, promptRoute } from "./routes/new";
 // Micro Database connection
 import { mongoConnect } from "./database/connect";
 // Configs
@@ -35,4 +35,8 @@ mongoConnect(process.env.MONGODB_URL as string, process.env.MONGODB_DB as string
 //Routes handellers:
 microservice.get("/", communityRoute);
 microservice.post("/new", promptRoute);
+microservice.get("/mine/:uid", userPromptsRoute);
+// Prompt Reactions
+microservice.post("/likes", likePromptRoute);
+microservice.post("/downloads", downloadPromptRoute);
 
