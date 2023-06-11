@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import { authorizationRoute } from './routes/auth';
 import { registerRoute } from './routes/register';
 import { loginRoute } from './routes/login';
+import { logoutRoute } from "./routes/logout";
 // Micro Database connection
 import { mongoConnect } from "./database/connect";
 // Configs
@@ -11,7 +12,7 @@ import { corsConfig, luscaConfig, limiterConfig, helmetConfig, sessionConfig } f
 // Middlewares
 import { consoleMiddleware } from "./middlewares";
 // Types
-import { SessionUser } from "./src/@types/user";
+import { SessionUser } from "./types/user";
 // load .env variables
 dotenv.config();
 
@@ -46,4 +47,5 @@ mongoConnect(process.env.MONGODB_URL as string, process.env.MONGODB_DB as string
 microservice.get("/", authorizationRoute);
 microservice.post(["/signin", "/login"], loginRoute);
 microservice.post(["/signup", "/register"], registerRoute);
+microservice.post("/logout", logoutRoute);
 
