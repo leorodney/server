@@ -18,7 +18,6 @@ export const userPromptsRoute = async (req: Request, res: Response)=>{
         // finding the user prompts using the prompt author or the user uid,
         // it should be in this order: author, uid; to avoid the error:
         //CastError: Cast to ObjectId failed for value "whybe" (type string) at path "uid" for model "Prompt"
-        console.log(req.session?.user);
         const userPrompts = await Prompt.find({ author: { $eq: req.params.uid } });
         // calculate the total downloads/likes user prompts reached
         let totalDownloads = userPrompts.reduce((accumulator, prompt) => accumulator + prompt.downloads, 0);
