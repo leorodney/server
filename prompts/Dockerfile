@@ -2,10 +2,7 @@
 FROM  node:latest
 
 # Create app directory
-WORKDIR /app/prompts
-
-# copy package.json and package-lock.json
-COPY package*.json ./
+WORKDIR /prompts
 
 # copy source code
 COPY . .
@@ -14,8 +11,8 @@ COPY . .
 RUN npm install
 RUN npm run build
 
-# expose port 8000
-EXPOSE 8000
+# expose port 7000
+EXPOSE 7000
 
 # start the microservice container
 CMD [ "npm", "start" ]
