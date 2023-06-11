@@ -28,7 +28,7 @@ microservice.use(express.json({limit: '50mb'})); // parse application/json with 
 microservice.use(consoleMiddleware); // console middleware
 
 //init the microservice:
-microservice.listen(process.env.MICROSERVICE_PORT, ()=> console.info(`=> microservice is live in: http://localhost:${process.env.MICROSERVICE_PORT}`));
+microservice.listen(process.env.MICROSERVICE_PORT, ()=> console.info(`=> microservice [${process.env.MICROSERVICE_NAME}] is live in: http://localhost:${process.env.MICROSERVICE_PORT}`));
 // MONGODB CONNECTION SETUP
 mongoConnect(process.env.MONGODB_URL as string, process.env.MONGODB_DB as string); 
 
