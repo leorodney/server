@@ -2,9 +2,9 @@
     "name": "leorodney-auth-microservice",
     "version": "1.0.0",
     "description": "ai image generator server side",
-    "main": "index.js",
+    "main": "./conatiner/index.js",
     "scripts": {
-      "start": "node index.js",
+      "start": "node ./conatiner/index.js",
       "dev": "nodemon --exec ts-node index.ts",
       "build": "tsc"
     },
@@ -16,7 +16,7 @@
       "dalle",
       "image-generator"
     ],
-    "author": "whybe7",
+    "author": "vvhybe",
     "license": "ISC",
     "dependencies": {
       "bcrypt": "^5.1.0",
