@@ -18,20 +18,67 @@ export const promptRoute = async (req: Request, res: Response)=>{
     const { value, img } = req.body;
     try{
         // verfy user is authenticated from auth microservice using axios
-        // console.log(req.cookies)
-        // console.log(req.headers.cookie)
         const { data } = await axios.get(`${process.env.AUTH_SERVICE_URL}`, { headers: { cookie: req.headers.cookie } });
-        // console.log("[AUTH DATA]: ",data);
-        if(!data.user){
-            return res.status(401).json({error: 'Not authenticated', ok: false});
-        }
+        if(!data.user) return res.status(401).json({error: 'Not authenticated', ok: false});
+
         const uploadResponse = await cloudinary.uploader.upload(img, { folder: process.env.CLOUDINARY_FOLDER as string });
         const newPrompt = await Prompt.create({ author: data.user.uid, value, img: uploadResponse.secure_url });
         res.status(201).json(newPrompt);
     }
     catch(error){
-        console.log(error);
+        console.error(error);
         res.status(500).send();
     }
 };
 
+
+/**
+ * update the like of a prompt
+ */
+export const likePromptRoute = async (req: Request, res: Response)=>{
+    const { id, type }: { id: string, type: "like" | "unlike" } = req.body;
+    try{
+        // verfy user is authenticated from auth microservice using axios
+        const { data } = await axios.get(`${process.env.AUTH_SERVICE_URL}`, { headers: { cookie: req.headers.cookie } });
+        if(!data.user) return res.status(401).json({error: 'Not authenticated', ok: false}); 
+
+        const prompt = await Prompt.findById(id);
+        
+        if(!prompt) return res.status(404).json({error: 'Prompt not found', ok: false});
+
+        // increment the like count of the prompt
+        type == "like" ? prompt.likes += 1 : prompt.likes -= 1 ;
+        prompt.likes < 0 ? prompt.likes = 0 : prompt.likes; 
+        await prompt.save();
+        res.status(200).json(prompt);
+
+    } catch(error) {
+        console.error(error);
+        res.status(500).send();
+    }
+}
+
+/**
+ * update the download of a prompt
+ */
+export const downloadPromptRoute = async (req: Request, res: Response)=>{
+    const { id } = req.body;
+    try{
+        // verfy user is authenticated from auth microservice using axios
+        const { data } = await axios.get(`${process.env.AUTH_SERVICE_URL}`, { headers: { cookie: req.headers.cookie } });
+        if(!data.user) return res.status(401).json({error: 'Not authenticated', ok: false});
+
+        const prompt = await Prompt.findById(id);
+        
+        if(!prompt) return res.status(404).json({error: 'Prompt not found', ok: false});
+
+        // increment the download count of the prompt
+        prompt.downloads += 1;
+        await prompt.save();
+        res.status(200).json(prompt);
+
+    } catch(error) {
+        console.error(error);
+        res.status(500).send();
+    }
+}
