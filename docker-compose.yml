@@ -1,6 +1,22 @@
 # compose all the microservices containers
 version: '3.7' # specify docker-compose version
 services:
+  router:
+    container_name: router
+    restart: always
+    build:
+      context: ./router
+      dockerfile: Dockerfile    
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - auth
+      - production
+      - promptify
+      - prompts
+
   auth:
     container_name: auth
     restart: always
@@ -8,10 +24,7 @@ services:
       context: ./auth
       dockerfile: Dockerfile
     ports:
-      - "8000:8000"
-    volumes:
-      - ./auth:/app
-      - /app/auth/node_modules
+      - "4000:4000"
   
   production:
     container_name: production
@@ -20,10 +33,7 @@ services:
       context: ./production
       dockerfile: Dockerfile
     ports:
-      - "9000:9000"
-    volumes:
-      - ./production:/app
-      - /app/production/node_modules
+      - "6000:6000"
 
   promptify:
     container_name: promptify
@@ -32,10 +42,7 @@ services:
       context: ./promptify
       dockerfile: Dockerfile
     ports:
-      - "5000:5000"
-    volumes:
-      - ./prompting:/app
-      - /app/prompting/node_modules
+      - "6000:6000"
   
   prompts:
     container_name: prompts
@@ -44,7 +51,4 @@ services:
       context: ./prompts
       dockerfile: Dockerfile
     ports:
-      - "6000:6000"
-    volumes:
-      - ./prompts:/app
-      - /app/prompts/node_modules
+      - "7000:7000"
